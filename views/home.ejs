@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <%- include("partials/head.ejs") %>
+</head>
+<body class = "text-center">
+    <h1 class = "bg-primary text-white p-4"> Famous Quotes </h1>
+
+    <form id="searchByKeyWordForm" action = "/searchByKeyword" method = "GET">
+        <label> KeyWord: <input type = "text" name = "keyword"></label>
+        <button class = "btn btn-outline-success">Search by Keyword</button>
+    </form>
+
+    <br>
+
+    <form action = "/searchByAuthor">
+        Author:
+        <select name = "authorId">
+            <% for (let row of rows) { %>
+                <option value = "<%=row.authorId %>"> <%=row.firstName%>  <%=row.lastName%></option>
+            <% } %>
+        </select>
+        <button class = "btn btn-outline-success">Search by Author</button>
+    </form>
+
+    <br>
+
+    <form action="/searchByCategory">
+        Category:
+        <select name="category">
+            <% for (let i of category) { %>
+                <option value="<%= i.category %>"><%= i.category %></option>
+            <% } %>
+        </select>
+        <button class="btn btn-outline-success">Search by Category</button>
+    </form>
+
+    <br>
+
+    <form action="/searchByLikes" method="GET">
+        Likes:
+            <input type="number" name="minLikes" placeholder="Minimum">
+            <input type="number" name="maxLikes" placeholder="Maximum">
+            <button class="btn btn-outline-success">Search by Likes</button>
+    </form>
+
+    <%- include("partials/footer.ejs") %>
+
+    <script src="/js/home.js"></script>
+</body>
+</html>

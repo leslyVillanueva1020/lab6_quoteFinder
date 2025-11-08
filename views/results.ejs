@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("partials/head.ejs") %>
+</head>
+<body>
+    <h1 class = "bg-primary text-white p-4"> Famous Quotes </h1>
+
+    <% if(!rows || rows.length === 0) { %>
+        No quotes found with likes between <%= minLikes %> and <%= maxLikes%>
+    <% } %>
+
+    <% for (let row of rows) { %>
+        "<%= row.quote %>"<br>
+        <a class = "authors" href = "#" authorId = "<%= row.authorId %>"> <%= row.firstName%> <%= row.lastName%></a>
+        <br><br>
+    <% } %>
+
+    <dialog id="authorModal">
+        <div id = "authorInfo">
+            <h2 id = "authorName"></h2>
+            <img id = "authorImage">
+            <p id="dob">DOB: </p> <span></span>
+            <p id="dod">DOD:</p>
+            <p id="sex">Sex: </p>
+            <p id="profession">Profession: </p>
+            <p id="country">Country: </p>
+
+            <br> <br>
+            <p id="bio"></p>
+        </div>
+        <button id="closeModal">Close</button>
+    </dialog>
+
+    <%- include("partials/footer.ejs") %>
+
+    <script src="/js/results.js"></script>
+</body>
+</html>
