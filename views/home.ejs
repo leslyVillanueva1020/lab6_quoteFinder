@@ -4,45 +4,72 @@
    <%- include("partials/head.ejs") %>
 </head>
 <body class = "text-center">
-    <h1 class = "bg-primary text-white p-4"> Famous Quotes </h1>
+    <header class="page-header">
+        <h1>Famous Quotes</h1>
+    </header>
 
-    <form id="searchByKeyWordForm" action = "/searchByKeyword" method = "GET">
-        <label> KeyWord: <input type = "text" name = "keyword"></label>
-        <button class = "btn btn-outline-success">Search by Keyword</button>
-    </form>
+    <main class="container">
+        <p id="errMsg" class="error-msg" aria-live="polite"></p>
 
-    <br>
+        <!-- Keyword -->
+        <section class="search-card">
+        <h2>Keyword</h2>
+        <form id="searchByKeyWordForm" action="/searchByKeyword" method="GET">
+            <div class="form-group">
+            <input id="kw" type="text" name="keyword" placeholder="e.g. happiness">
+            </div>
+            <button class="btn">Search by Keyword</button>
+        </form>
+        </section>
 
-    <form action = "/searchByAuthor">
-        Author:
-        <select name = "authorId">
-            <% for (let row of rows) { %>
-                <option value = "<%=row.authorId %>"> <%=row.firstName%>  <%=row.lastName%></option>
-            <% } %>
-        </select>
-        <button class = "btn btn-outline-success">Search by Author</button>
-    </form>
+        <!-- Author -->
+        <section class="search-card">
+        <h2>Author</h2>
+        <form action="/searchByAuthor" method="GET">
+            <div class="form-group">
+            <select id="authorId" name="authorId">
+                <% for (let row of rows) { %>
+                <option value="<%= row.authorId %>"><%= row.firstName %> <%= row.lastName %></option>
+                <% } %>
+            </select>
+            </div>
+            <button class="btn">Search by Author</button>
+        </form>
+        </section>
 
-    <br>
-
-    <form action="/searchByCategory">
-        Category:
-        <select name="category">
-            <% for (let i of category) { %>
+        <!-- Category -->
+        <section class="search-card">
+        <h2>Category</h2>
+        <form action="/searchByCategory" method="GET">
+            <div class="form-group">
+            <select id="category" name="category">
+                <% for (let i of category) { %>
                 <option value="<%= i.category %>"><%= i.category %></option>
-            <% } %>
-        </select>
-        <button class="btn btn-outline-success">Search by Category</button>
-    </form>
+                <% } %>
+            </select>
+            </div>
+            <button class="btn">Search by Category</button>
+        </form>
+        </section>
 
-    <br>
-
-    <form action="/searchByLikes" method="GET">
-        Likes:
-            <input type="number" name="minLikes" placeholder="Minimum">
-            <input type="number" name="maxLikes" placeholder="Maximum">
-            <button class="btn btn-outline-success">Search by Likes</button>
-    </form>
+        <!-- Likes -->
+        <section class="search-card">
+        <h2>Likes</h2>
+        <form action="/searchByLikes" method="GET">
+            <div class="form-row">
+            <div class="form-group">
+                <label for="minLikes">Minimum</label>
+                <input id="minLikes" type="number" name="minLikes" placeholder="0">
+            </div>
+            <div class="form-group">
+                <label for="maxLikes">Maximum</label>
+                <input id="maxLikes" type="number" name="maxLikes" placeholder="100">
+            </div>
+            </div>
+            <button class="btn">Search by Likes</button>
+        </form>
+        </section>
+    </main>
 
     <%- include("partials/footer.ejs") %>
 

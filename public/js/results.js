@@ -1,6 +1,14 @@
 $("#closeModal").addEventListener("click", () => {
-            $("#authorModal").close() 
-        })
+    $("#authorName").textContent = "";
+            $("#authorImage").src = "";
+            $("#dob").textContent = `DOB:`;
+            $("#dod").textContent = `DOD:`;
+            $("#sex").textContent = `Sex:`;
+            $("#profession").textContent = `Profession:`;
+            $("#country").textContent = `Country:`;
+            $("#bio").textContent = "";
+    $("#authorModal").close(); 
+})
 
 
         let authorLinks = document.querySelectorAll(".authors");
@@ -15,9 +23,7 @@ $("#closeModal").addEventListener("click", () => {
         async function getAuthorInfo() {
             let authorId = this.getAttribute("authorId");
 
-            // alert(authorId);
-
-            let url = "api/authors/" + authorId;
+            let url = "/api/authors/" + authorId;
             let response = await fetch(url);
             let data = await response.json();
             console.log(data);

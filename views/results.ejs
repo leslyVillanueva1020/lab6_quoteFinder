@@ -4,32 +4,50 @@
     <%- include("partials/head.ejs") %>
 </head>
 <body>
-    <h1 class = "bg-primary text-white p-4"> Famous Quotes </h1>
+    <header class="page-header">
+        <h1>Famous Quotes</h1>
+        <a class="back-link" href="/">← Back to search</a>
+    </header>
 
-    <% if(!rows || rows.length === 0) { %>
-        No quotes found with likes between <%= minLikes %> and <%= maxLikes%>
-    <% } %>
+    <main class="container">
+        <% if (!rows || rows.length === 0) { %>
+        <% if (typeof minLikes !== 'undefined' && typeof maxLikes !== 'undefined') { %>
+            <p class="muted">No quotes found with likes between <%= minLikes %> and <%= maxLikes %>.</p>
+        <% } else if (typeof keyword !== 'undefined') { %>
+            <p class="muted">No quotes found for keyword: "<%= keyword %>".</p>
+        <% } else if (typeof category !== 'undefined') { %>
+            <p class="muted">No quotes found in category: "<%= category %>".</p>
+        <% } else if (typeof authorName !== 'undefined') { %>
+            <p class="muted">No quotes found for author: <%= authorName %>.</p>
+        <% } else { %>
+            <p class="muted">No quotes found.</p>
+        <% } %>
+        <% } %>
 
-    <% for (let row of rows) { %>
-        "<%= row.quote %>"<br>
-        <a class = "authors" href = "#" authorId = "<%= row.authorId %>"> <%= row.firstName%> <%= row.lastName%></a>
-        <br><br>
-    <% } %>
+        <section class="quote-list">
+        <% for (let row of rows) { %>
+            <article class="quote-card">
+            <blockquote>"<%= row.quote %>"</blockquote>
+            <a class="author-link authors" href="#" authorId="<%= row.authorId %>">
+                <%= row.firstName %> <%= row.lastName %>
+            </a>
+            </article>
+        <% } %>
+        </section>
+    </main>
 
     <dialog id="authorModal">
-        <div id = "authorInfo">
-            <h2 id = "authorName"></h2>
-            <img id = "authorImage">
-            <p id="dob">DOB: </p> <span></span>
-            <p id="dod">DOD:</p>
-            <p id="sex">Sex: </p>
-            <p id="profession">Profession: </p>
-            <p id="country">Country: </p>
-
-            <br> <br>
-            <p id="bio"></p>
+        <div id="authorInfo">
+        <h2 id="authorName"></h2>
+        <img id="authorImage" alt="Author photo">
+        <p id="dob"><strong>DOB:</strong> <span></span></p>
+        <p id="dod"><strong>DOD:</strong> <span></span></p>
+        <p id="sex"><strong>Sex:</strong> <span></span></p>
+        <p id="profession"><strong>Profession:</strong> <span></span></p>
+        <p id="country"><strong>Country:</strong> <span></span></p>
+        <p id="bio"></p>
+        <button id="closeModal" class="btn">Close</button>
         </div>
-        <button id="closeModal">Close</button>
     </dialog>
 
     <%- include("partials/footer.ejs") %>
